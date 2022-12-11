@@ -7,6 +7,7 @@ module.exports = {
             .then((users) => res.json(users))
             .catch((err) => res.status(500).json(err));
     },
+    // Create new user
     createUser(req, res) {
         User.create(req.body)
             .then((user) => res.json(user))
