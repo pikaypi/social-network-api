@@ -35,9 +35,6 @@ userSchema
     .get(function () {
         return this.friends.length;
     })
-    .set(function () {
-        return this.friends.length;
-    })
 
 const User = model('user', userSchema);
 
