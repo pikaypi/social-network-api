@@ -69,5 +69,19 @@ module.exports = {
                     : res.status(200).json(reaction)
             )
             .catch((err) => res.status(500).json(err));
+    },
+    // Delete a reaction
+    deleteReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { reactionId: req.body.reactionId }}},
+            { runValidators: true, new: true }
+        )
+            .then((reaction) => 
+                !reaction
+                    ? res.status(404).json({ message: 'Incorrect thought and reaction pairing' })
+                    : res.status(200).json(reaction)
+            )
+            .catch((err) => res.status(500).json(err));
     }
 }
