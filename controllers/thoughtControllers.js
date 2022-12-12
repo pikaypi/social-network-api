@@ -52,7 +52,16 @@ module.exports = {
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
-                    : res.status(200).json(thought)
+                    : User.findOneAndUpdate(
+                        { username: thought.username },
+                        { $pull: { thoughts: thought._id }},
+                        { runValidators: true, new: true }
+                    )
+                    .then((user) => 
+                        !user
+                            ? res.status(404).json({ message: `No user with the username ${user.username} found`})
+                            : res.status(200).json(user)
+                    )
             )
             .catch((err) => res.status(500).json(err));
     },
